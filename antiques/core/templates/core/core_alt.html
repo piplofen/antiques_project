@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.0/latin.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        antique: {
+                            50: '#fdf8f0',
+                            100: '#f9edda',
+                            200: '#f2d6af',
+                            300: '#e9b97a',
+                            400: '#df9647',
+                            500: '#d67a2c',
+                            600: '#c66422',
+                            700: '#a54d1e',
+                            800: '#863f20',
+                            900: '#6d351c',
+                            950: '#3b190c',
+                        },
+                        gold: {
+                            300: '#f0d68a',
+                            400: '#e8c35a',
+                            500: '#d4a843',
+                            600: '#b8903a',
+                            700: '#967432',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-down { animation: slideDown 0.3s ease-out; }
+        @keyframes pulse-gold { 0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 67, 0.4); } 50% { box-shadow: 0 0 0 8px rgba(212, 168, 67, 0); } }
+        .pulse-gold { animation: pulse-gold 2s infinite; }
+        .image-hover:hover img { transform: scale(1.05); }
+        .image-hover img { transition: transform 0.5s ease; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="scrollToTop()">
+                    <svg class="w-8 h-8 lg:w-10 lg:h-10 text-gold-500" viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                        <path d="M20 8 C20 8 12 16 12 22 C12 26.4 15.6 30 20 30 C24.4 30 28 26.4 28 22 C28 16 20 8 20 8Z" fill="currentColor" opacity="0.3"/>
+                        <path d="M20 8 C20 8 12 16 12 22 C12 26.4 15.6 30 20 30 C24.4 30 28 26.4 28 22 C28 16 20 8 20 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="20" cy="22" r="3" fill="currentColor"/>
+                    </svg>
+                    <span class="text-xl lg:text-2xl font-bold text-antique-900 tracking-tight">Antique<span class="text-gold-500">Vault</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('all')">Все лоты</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('vases')">Вазы</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('watches')">Часы</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('sculpture')">Скульптуры</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('paintings')">Картины</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('books')">Книги</a>
+                    <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-antique-800 hover:bg-antique-50 transition-colors" onclick="filterCategory('silver')">Серебро</a>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Search -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-500 hover:text-antique-800 hover:bg-antique-50 rounded-lg transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </button>
+                    <!-- Cart -->
+                    <button onclick="toggleCart()" class="relative p-2 text-gray-500 hover:text-antique-800 hover:bg-antique-50 rounded-lg transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span id="cartBadge" class="hidden absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
+                    </button>
+                    <!-- Auth Buttons -->
+                    <div class="hidden sm:flex items-center gap-2">
+                        <button onclick="openModal('login')" class="px-4 py-2 text-sm font-medium text-antique-800 hover:bg-antique-50 rounded-lg transition-colors">Войти</button>
+                        <button onclick="openModal('register')" class="px-4 py-2 text-sm font-medium text-white bg-antique-800 hover:bg-antique-900 rounded-lg transition-colors shadow-sm">Регистрация</button>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-500 hover:text-antique-800 rounded-lg">
+                        <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-gray-100 bg-white animate-slide-down">
+            <div class="px-4 py-3 space-y-1">
+                <a href="#" onclick="filterCategory('all'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-antique-800 bg-antique-50">Все лоты</a>
+                <a href="#" onclick="filterCategory('vases'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Вазы</a>
+                <a href="#" onclick="filterCategory('watches'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Часы</a>
+                <a href="#" onclick="filterCategory('sculpture'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Скульптуры</a>
+                <a href="#" onclick="filterCategory('paintings'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Картины</a>
+                <a href="#" onclick="filterCategory('books'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Книги</a>
+                <a href="#" onclick="filterCategory('silver'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Серебро</a>
+                <div class="pt-3 flex gap-2">
+                    <button onclick="openModal('login'); toggleMobileMenu()" class="flex-1 px-4 py-2.5 text-sm font-medium text-antique-800 border border-antique-300 rounded-lg">Войти</button>
+                    <button onclick="openModal('register'); toggleMobileMenu()" class="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-antique-800 rounded-lg">Регистрация</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Bar -->
+    <div id="searchBar" class="fixed top-16 lg:top-20 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-md hidden animate-slide-down">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="searchInput" type="text" placeholder="Поиск антиквариата..." class="flex-1 text-sm outline-none text-gray-700 placeholder-gray-400" oninput="searchItems(this.value)">
+                <button onclick="toggleSearch()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="pt-16 lg:pt-20">
+        <div class="relative bg-gradient-to-br from-antique-900 via-antique-800 to-antique-950 overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-10 left-10 w-72 h-72 bg-gold-400 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-500 rounded-full blur-3xl"></div>
+            </div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur rounded-full text-gold-300 text-xs font-medium mb-6">
+                        <span class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
+                        Более 500 уникальных экспонатов
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold text-white leading-tight mb-4 lg:mb-6">
+                        Уникальный <span class="text-gold-400">антиквариат</span> со всего мира
+                    </h1>
+                    <p class="text-base sm:text-lg text-antique-200 mb-8 lg:mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Коллекция редких предметов искусства, антикварных часов, ваз, скульптур и книг. Каждый экспонат с сертификатом подлинности.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <button onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})" class="px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-antique-950 font-semibold rounded-xl transition-all shadow-lg shadow-gold-500/25 hover:shadow-gold-400/30 text-sm">
+                            Смотреть каталог
+                        </button>
+                        <button class="px-8 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-medium rounded-xl transition-all border border-white/20 text-sm">
+                            Узнать больше
+                        </button>
+                    </div>
+                </div>
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-12 lg:mt-16">
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-gold-400">500+</div>
+                        <div class="text-xs text-antique-300 mt-1">Экспонатов</div>
+                    </div>
+                    <div class="text-center border-x border-white/10">
+                        <div class="text-2xl lg:text-3xl font-bold text-gold-400">12K</div>
+                        <div class="text-xs text-antique-300 mt-1">Клиентов</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-gold-400">50+</div>
+                        <div class="text-xs text-antique-300 mt-1">Стран</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Stories (Instagram style) -->
+    <section class="bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex gap-6 overflow-x-auto scrollbar-hide pb-2">
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('all')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-antique-50 flex items-center justify-center text-2xl">🏛️</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Все</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('vases')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-blue-50 flex items-center justify-center text-2xl">🏺</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Вазы</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('watches')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-amber-50 flex items-center justify-center text-2xl">⏱️</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Часы</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('sculpture')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-stone-50 flex items-center justify-center text-2xl"></div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Скульптуры</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('books')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-yellow-50 flex items-center justify-center text-2xl">📖</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Книги</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('silver')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-gray-50 flex items-center justify-center text-2xl">🫖</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Серебро</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group" onclick="filterCategory('paintings')">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-br from-gold-400 to-antique-600 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full rounded-full bg-white p-0.5">
+                            <div class="w-full h-full rounded-full bg-rose-50 flex items-center justify-center text-2xl">🖼️</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-gray-600">Картины</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Catalog Grid -->
+    <main id="catalog" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <!-- Section Header -->
+        <div class="flex items-center justify-between mb-6 lg:mb-8">
+            <div>
+                <h2 id="sectionTitle" class="text-2xl lg:text-3xl font-bold text-gray-900">Каталог</h2>
+                <p id="sectionSubtitle" class="text-sm text-gray-500 mt-1">Все уникальные экспонаты</p>
+            </div>
+            <!-- Sort -->
+            <select onchange="sortItems(this.value)" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-600 outline-none focus:border-gold-500">
+                <option value="newest">Новые</option>
+                <option value="price-asc">Цена ↑</option>
+                <option value="price-desc">Цена ↓</option>
+                <option value="popular">Популярные</option>
+            </select>
+        </div>
+
+        <!-- Grid -->
+        <div id="itemsGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            <!-- Items will be rendered by JS -->
+        </div>
+
+        <!-- No Results -->
+        <div id="noResults" class="hidden text-center py-20">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">Ничего не найдено</h3>
+            <p class="text-gray-500">Попробуйте изменить параметры поиска</p>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="toggleCart()"></div>
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300">
+        <div class="flex flex-col h-full">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900">Корзина</h3>
+                <button onclick="toggleCart()" class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <div class="text-center py-12 text-gray-400">
+                    <svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    <p>Корзина пуста</p>
+                </div>
+            </div>
+            <div id="cartFooter" class="hidden border-t border-gray-100 p-6 space-y-4">
+                <div class="flex justify-between text-lg font-bold">
+                    <span>Итого</span>
+                    <span id="cartTotal">0 ₽</span>
+                </div>
+                <button onclick="checkout()" class="w-full py-3.5 bg-antique-800 hover:bg-antique-900 text-white font-semibold rounded-xl transition-colors">
+                    Оформить заказ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('login')"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden">
+                <div class="px-8 pt-8 pb-6 text-center">
+                    <div class="w-16 h-16 bg-antique-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">Вход в аккаунт</h3>
+                    <p class="text-sm text-gray-500 mt-1">Войдите, чтобы покупать антиквариат</p>
+                </div>
+                <form class="px-8 pb-8 space-y-4" onsubmit="handleLogin(event)">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" required placeholder="your@email.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
+                        <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-gold-500 focus:ring-gold-500">
+                            <span class="text-sm text-gray-600">Запомнить</span>
+                        </label>
+                        <a href="#" class="text-sm text-gold-600 hover:text-gold-500 font-medium">Забыли пароль?</a>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-antique-800 hover:bg-antique-900 text-white font-semibold rounded-xl transition-colors text-sm">Войти</button>
+                    <p class="text-center text-sm text-gray-500">Нет аккаунта? <button type="button" onclick="closeModal('login'); openModal('register')" class="text-gold-600 hover:text-gold-500 font-medium">Зарегистрироваться</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('register')"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden">
+                <div class="px-8 pt-8 pb-6 text-center">
+                    <div class="w-16 h-16 bg-antique-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">Регистрация</h3>
+                    <p class="text-sm text-gray-500 mt-1">Создайте аккаунт для покупок</p>
+                </div>
+                <form class="px-8 pb-8 space-y-4" onsubmit="handleRegister(event)">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Имя</label>
+                            <input type="text" required placeholder="Иван" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Фамилия</label>
+                            <input type="text" required placeholder="Иванов" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" required placeholder="your@email.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
+                        <input type="password" required placeholder="Минимум 8 символов" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all">
+                    </div>
+                    <label class="flex items-start gap-2 cursor-pointer">
+                        <input type="checkbox" required class="w-4 h-4 mt-0.5 rounded border-gray-300 text-gold-500 focus:ring-gold-500">
+                        <span class="text-sm text-gray-600">Я согласен с <a href="#" class="text-gold-600 hover:underline">условиями использования</a> и <a href="#" class="text-gold-600 hover:underline">политикой конфиденциальности</a></span>
+                    </label>
+                    <button type="submit" class="w-full py-3 bg-antique-800 hover:bg-antique-900 text-white font-semibold rounded-xl transition-colors text-sm">Создать аккаунт</button>
+                    <p class="text-center text-sm text-gray-500">Уже есть аккаунт? <button type="button" onclick="closeModal('register'); openModal('login')" class="text-gold-600 hover:text-gold-500 font-medium">Войти</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Detail Modal -->
+    <div id="itemModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeItemModal()"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl animate-fade-in overflow-hidden max-h-[90vh] overflow-y-auto">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 bg-gray-100">
+                        <img id="modalItemImage" src="" alt="" class="w-full h-64 md:h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 p-6 lg:p-8">
+                        <button onclick="closeItemModal()" class="absolute top-4 right-4 p-2 bg-white/80 hover:bg-white rounded-full shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                        <span id="modalItemCategory" class="inline-block px-3 py-1 bg-antique-50 text-antique-700 text-xs font-medium rounded-full mb-3"></span>
+                        <h3 id="modalItemTitle" class="text-xl lg:text-2xl font-bold text-gray-900 mb-2"></h3>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex text-gold-400" id="modalItemStars"></div>
+                            <span id="modalItemReviews" class="text-sm text-gray-500"></span>
+                        </div>
+                        <p id="modalItemDesc" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Период</span>
+                                <span id="modalItemPeriod" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Состояние</span>
+                                <span id="modalItemCondition" class="font-medium text-gray-900"></span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Сертификат</span>
+                                <span class="font-medium text-green-600">✓ В наличии</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <span class="text-3xl font-bold text-antique-900" id="modalItemPrice"></span>
+                            </div>
+                            <span id="modalItemLikes" class="text-sm text-gray-500 flex items-center gap-1">
+                                <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </span>
+                        </div>
+                        <button id="modalBuyBtn" class="w-full py-3.5 bg-antique-800 hover:bg-antique-900 text-white font-semibold rounded-xl transition-all pulse-gold text-sm">
+                            Добавить в корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+        <div class="flex items-center gap-3 px-6 py-3 bg-gray-900 text-white rounded-xl shadow-lg animate-fade-in">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span id="toastMessage" class="text-sm font-medium">Добавлено в корзину</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-antique-950 text-antique-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <svg class="w-8 h-8 text-gold-500" viewBox="0 0 40 40" fill="none">
+                            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                            <path d="M20 8 C20 8 12 16 12 22 C12 26.4 15.6 30 20 30 C24.4 30 28 26.4 28 22 C28 16 20 8 20 8Z" fill="currentColor" opacity="0.3"/>
+                            <path d="M20 8 C20 8 12 16 12 22 C12 26.4 15.6 30 20 30 C24.4 30 28 26.4 28 22 C28 16 20 8 20 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="22" r="3" fill="currentColor"/>
+                        </svg>
+                        <span class="text-lg font-bold text-white">Antique<span class="text-gold-500">Vault</span></span>
+                    </div>
+                    <p class="text-sm text-antique-400 leading-relaxed">Ваш надёжный партнёр в мире антиквариата с 2010 года.</p>
+                    <div class="flex gap-3 mt-4">
+                        <a href="#" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Каталог</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Вазы</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Часы</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Скульптуры</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Картины</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Серебро</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Компания</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">О нас</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Блог</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Карьера</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Поддержка</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Доставка</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Возврат</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">Экспертиза</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-antique-400">© 2026 AntiqueVault. Все права защищены.</p>
+                <div class="flex gap-6 text-sm text-antique-400">
+                    <a href="#" class="hover:text-white transition-colors">Конфиденциальность</a>
+                    <a href="#" class="hover:text-white transition-colors">Условия</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Item data
+        const itemsData = [
+            {
+                id: 1,
+                title: "Фарфоровая ваза династии Цин",
+                price: 285000,
+                category: "vases",
+                categoryLabel: "Вазы",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/1d2eede4a-8cc4-4d8d-9314-f7f7406eed62.png",
+                description: "Изысканная фарфоровая ваза с сине-белым росписью периода династии Цин. Уникальный орнамент с цветами пиона и птицами.",
+                period: "XVIII век",
+                condition: "Отличное",
+                rating: 5,
+                reviews: 24,
+                likes: 156,
+                date: "2026-05-01"
+            },
+            {
+                id: 2,
+                title: "Золотые карманные часы",
+                price: 420000,
+                category: "watches",
+                categoryLabel: "Часы",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/150ae2bc9-d9d6-44c4-8e58-f2cd0639c4c6.png",
+                description: "Карманные часы с открытым механизмом и римскими цифрами. Корпус из золота 750 пробы с гравировкой. Полностью рабочий механизм.",
+                period: "XIX век",
+                condition: "Превосходное",
+                rating: 5,
+                reviews: 18,
+                likes: 203,
+                date: "2026-05-03"
+            },
+            {
+                id: 3,
+                title: "Бронзовая скульптура коня",
+                price: 650000,
+                category: "sculpture",
+                categoryLabel: "Скульптуры",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/14f83c4d8-454d-4672-8a6c-9c31e8f8a4f6.png",
+                description: "Бронзовая скульптура скачущего коня на мраморном постаменте. Детализированная проработка мускулатуры и развевающейся гривы.",
+                period: "XX век",
+                condition: "Отличное",
+                rating: 4,
+                reviews: 12,
+                likes: 89,
+                date: "2026-04-28"
+            },
+            {
+                id: 4,
+                title: "Старинная книга с золотым тиснением",
+                price: 175000,
+                category: "books",
+                categoryLabel: "Книги",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/157bd072b-dca0-4b98-8272-07429c6daea2.png",
+                description: "Редкое издание в кожаном переплёте с золотым тиснением. Пергаментные страницы сохранены в превосходном состоянии.",
+                period: "XVIII век",
+                condition: "Хорошее",
+                rating: 4,
+                reviews: 8,
+                likes: 67,
+                date: "2026-05-05"
+            },
+            {
+                id: 5,
+                title: "Серебряный чайный сервиз",
+                price: 340000,
+                category: "silver",
+                categoryLabel: "Серебро",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/135d27a3f-4547-4a79-a003-4d874afd7310.png",
+                description: "Викторианский чайный сервиз из серебра 925 пробы с орнаментом из растительных мотивов. В комплекте: чайник, сахарница, сливочник.",
+                period: "XIX век",
+                condition: "Превосходное",
+                rating: 5,
+                reviews: 31,
+                likes: 245,
+                date: "2026-05-02"
+            },
+            {
+                id: 6,
+                title: "Портрет в золочёной раме",
+                price: 520000,
+                category: "paintings",
+                categoryLabel: "Картины",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/109b8f9e0-4a5c-4060-8cda-c1cf6cf72305.png",
+                description: "Масляный портрет аристократа в пышной позолоченной раме в стиле барокко. Оригинальная работа неизвестного мастера XVIII века.",
+                period: "XVIII век",
+                condition: "Хорошее",
+                rating: 5,
+                reviews: 15,
+                likes: 178,
+                date: "2026-04-30"
+            },
+            {
+                id: 7,
+                title: "Фарфоровая ваза «Императорская»",
+                price: 395000,
+                category: "vases",
+                categoryLabel: "Вазы",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/1d2eede4a-8cc4-4d8d-9314-f7f7406eed62.png",
+                description: "Коллекционная ваза с ручной росписью. Изображение дракона и облаков на белом фоне. Императорские клейма на дне.",
+                period: "XVII век",
+                condition: "Отличное",
+                rating: 5,
+                reviews: 9,
+                likes: 134,
+                date: "2026-05-06"
+            },
+            {
+                id: 8,
+                title: "Настольные часы с маятником",
+                price: 210000,
+                category: "watches",
+                categoryLabel: "Часы",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/150ae2bc9-d9d6-44c4-8e58-f2cd0639c4c6.png",
+                description: "Настольные часы в деревянном корпусе с латунным маятником. Рабочий механизм, бой на каждый час.",
+                period: "XIX век",
+                condition: "Хорошее",
+                rating: 4,
+                reviews: 6,
+                likes: 45,
+                date: "2026-04-25"
+            },
+            {
+                id: 9,
+                title: "Серебряная шкатулка с эмалью",
+                price: 180000,
+                category: "silver",
+                categoryLabel: "Серебро",
+                image: "https://image.qwenlm.ai/public_source/20a93a25-75db-4f33-b126-d2df60bba852/135d27a3f-4547-4a79-a003-4d874afd7310.png",
+                description: "Серебряная шкатулка с миниатюрной росписью горячей эмалью. Внутренняя отделка бархатом. Проба 875.",
+                period: "XX век",
+                condition: "Превосходное",
+                rating: 4,
+                reviews: 11,
+                likes: 98,
+                date: "2026-05-04"
+            }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+        let currentSort = 'newest';
+
+        // Render items
+        function renderItems(items) {
+            const grid = document.getElementById('itemsGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (items.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = items.map(item => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group animate-fade-in" data-category="${item.category}">
+                    <div class="relative overflow-hidden image-hover cursor-pointer" onclick="openItemModal(${item.id})">
+                        <img src="${item.image}" alt="${item.title}" class="w-full aspect-[4/5] object-cover" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center hover:bg-white shadow-sm" onclick="event.stopPropagation(); toggleLike(${item.id})">
+                                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </button>
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2.5 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-medium text-antique-800">${item.categoryLabel}</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex text-gold-400 text-xs">
+                                ${'<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'.repeat(item.rating)}
+                            </div>
+                            <span class="text-xs text-gray-400">${item.reviews} отзывов</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 text-sm mb-1 line-clamp-2 leading-snug cursor-pointer hover:text-antique-800 transition-colors" onclick="openItemModal(${item.id})">${item.title}</h3>
+                        <p class="text-xs text-gray-400 mb-3">${item.period}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-antique-900">${formatPrice(item.price)}</span>
+                            <button onclick="addToCart(${item.id})" class="px-4 py-2 bg-antique-800 hover:bg-antique-900 text-white text-xs font-semibold rounded-lg transition-all hover:scale-105 active:scale-95 shadow-sm">
+                                Купить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatPrice(price) {
+            return price.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function filterItems() {
+            let filtered = currentFilter === 'all' ? [...itemsData] : itemsData.filter(item => item.category === currentFilter);
+
+            // Search
+            const searchVal = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+            if (searchVal) {
+                filtered = filtered.filter(item =>
+                    item.title.toLowerCase().includes(searchVal) ||
+                    item.description.toLowerCase().includes(searchVal) ||
+                    item.categoryLabel.toLowerCase().includes(searchVal)
+                );
+            }
+
+            // Sort
+            switch (currentSort) {
+                case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
+                case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
+                case 'popular': filtered.sort((a, b) => b.likes - a.likes); break;
+                default: filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            renderItems(filtered);
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+            const labels = {
+                all: 'Каталог', vases: 'Вазы', watches: 'Часы', sculpture: 'Скульптуры',
+                books: 'Книги', silver: 'Серебро', paintings: 'Картины'
+            };
+            const subtitles = {
+                all: 'Все уникальные экспонаты', vases: 'Коллекция ваз', watches: 'Антикварные часы', sculpture: 'Скульптуры и статуэтки',
+                books: 'Редкие книги и манускрипты', silver: 'Серебряные изделия', paintings: 'Живопись и портреты'
+            };
+            document.getElementById('sectionTitle').textContent = labels[category] || 'Каталог';
+            document.getElementById('sectionSubtitle').textContent = subtitles[category] || 'Экспонаты';
+
+            // Update active nav
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-antique-800', 'bg-antique-50');
+                link.classList.add('text-gray-500');
+            });
+            filterItems();
+            document.getElementById('catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function sortItems(value) {
+            currentSort = value;
+            filterItems();
+        }
+
+        function searchItems(value) {
+            filterItems();
+        }
+
+        // Cart functions
+        function addToCart(id) {
+            const item = itemsData.find(i => i.id === id);
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+            updateCartUI();
+            showToast('Добавлено в корзину!');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, c) => sum + c.qty, 0);
+            badge.textContent = totalItems;
+            badge.classList.toggle('hidden', totalItems === 0);
+
+            const cartItemsEl = document.getElementById('cartItems');
+            const cartFooter = document.getElementById('cartFooter');
+
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <p>Корзина пуста</p>
+                    </div>
+                `;
+                cartFooter.classList.add('hidden');
+            } else {
+                cartItemsEl.innerHTML = cart.map(item => `
+                    <div class="flex gap-3 p-3 bg-gray-50 rounded-xl">
+                        <img src="${item.image}" alt="${item.title}" class="w-20 h-20 object-cover rounded-lg flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-medium text-gray-900 truncate">${item.title}</h4>
+                            <p class="text-sm font-bold text-antique-800 mt-1">${formatPrice(item.price)}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-100 text-sm">−</button>
+                                <span class="text-sm font-medium w-6 text-center">${item.qty}</span>
+                                <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-100 text-sm">+</button>
+                                <button onclick="removeFromCart(${item.id})" class="ml-auto p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                cartFooter.classList.remove('hidden');
+                const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
+                document.getElementById('cartTotal').textContent = formatPrice(total);
+            }
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    removeFromCart(id);
+                    return;
+                }
+                updateCartUI();
+            }
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            const isOpen = !sidebar.classList.contains('translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            showToast('Заказ оформлен! Спасибо за покупку!');
+            cart = [];
+            updateCartUI();
+            setTimeout(() => toggleCart(), 1000);
+        }
+
+        // Modal functions
+        function openModal(type) {
+            document.getElementById(type + 'Modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function openItemModal(id) {
+            const item = itemsData.find(i => i.id === id);
+            if (!item) return;
+
+            document.getElementById('modalItemImage').src = item.image;
+            document.getElementById('modalItemImage').alt = item.title;
+            document.getElementById('modalItemCategory').textContent = item.categoryLabel;
+            document.getElementById('modalItemTitle').textContent = item.title;
+            document.getElementById('modalItemStars').innerHTML = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'.repeat(item.rating);
+            document.getElementById('modalItemReviews').textContent = `(${item.reviews} отзывов)`;
+            document.getElementById('modalItemDesc').textContent = item.description;
+            document.getElementById('modalItemPeriod').textContent = item.period;
+            document.getElementById('modalItemCondition').textContent = item.condition;
+            document.getElementById('modalItemPrice').textContent = formatPrice(item.price);
+            document.getElementById('modalItemLikes').innerHTML = `<svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> ${item.likes}`;
+
+            const buyBtn = document.getElementById('modalBuyBtn');
+            buyBtn.onclick = () => { addToCart(id); closeItemModal(); };
+
+            document.getElementById('itemModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeItemModal() {
+            document.getElementById('itemModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // UI toggles
+        function toggleSearch() {
+            const bar = document.getElementById('searchBar');
+            bar.classList.toggle('hidden');
+            if (!bar.classList.contains('hidden')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            menu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+
+        function toggleLike(id) {
+            const item = itemsData.find(i => i.id === id);
+            if (item) {
+                item.likes++;
+                filterItems();
+                showToast('Добавлено в избранное!');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            closeModal('login');
+            showToast('Вы успешно вошли!');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            closeModal('register');
+            showToast('Аккаунт создан! Добро пожаловать!');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Close modals on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal('login');
+                closeModal('register');
+                closeItemModal();
+                if (!document.getElementById('cartSidebar').classList.contains('translate-x-full')) {
+                    toggleCart();
+                }
+            }
+        });
+
+        // Init
+        renderItems(itemsData);
+    </script>
+</body>
+</html>
+
