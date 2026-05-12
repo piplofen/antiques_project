@@ -15,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tailwind',
     'theme',
-    'core'
+    'core',
+    'services'
 ]
 
 if DEBUG:

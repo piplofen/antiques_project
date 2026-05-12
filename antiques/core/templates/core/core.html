@@ -1,3 +1,6 @@
+{% load static tailwind_tags %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AntiqueVault</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.0/latin.css">
     <script>
         tailwind.config = {
             theme: {
@@ -19,30 +21,17 @@
                             DEFAULT: 'var(--color-primary)',
                             dark: 'var(--color-primary-dark)',
                         },
-                        accent: {
-                            light: 'var(--color-secondary-light)',
-                            DEFAULT: 'var(--color-secondary)',
-                            dark: 'var(--color-secondary-dark)',
-                        },
                     },
                 }
             }
         }
     </script>
     <style>
-        /* ===== ЦВЕТОВЫЕ СЛОТЫ — ИЗМЕНИТЕ ЭТИ ЗНАЧЕНИЯ ===== */
         :root {
-            /* ── Основной цвет ── */
-            --color-primary: #4f46e5;
-            --color-primary-light: #818cf8;
-            --color-primary-dark: #3730a3;
-
-            /* ── Дополнительный цвет ── */
-            --color-secondary: #f59e0b;
-            --color-secondary-light: #fbbf24;
-            --color-secondary-dark: #d97706;
+            --color-primary: #A85B5B;
+            --color-primary-light: #A85B82;
+            --color-primary-dark: #A8825B;
         }
-        /* ================================================== */
 
         * { font-family: 'Inter', sans-serif; }
 
@@ -54,10 +43,6 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
-
-    <!-- ============================================ -->
-    <!--           НАВИГАЦИЯ / МЕНЮ                   -->
-    <!-- ============================================ -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -101,8 +86,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-100 bg-white animate-slide-down">
             <div class="px-4 py-4 space-y-1">
                 <a href="#" class="block px-3 py-2.5 text-sm font-medium text-brand-dark rounded-lg bg-brand-light/10">Маркетплейс</a>
@@ -115,79 +98,37 @@
             </div>
         </div>
     </nav>
-
-    <!-- Spacer for fixed nav -->
     <div class="h-16"></div>
 
-    <!-- ============================================ -->
-    <!--        ЦВЕТОВЫЕ СЛОТЫ (ВИЗУАЛЬНЫЕ)           -->
-    <!-- ============================================ -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Цветовые слоты</h2>
-
-        <!-- Primary Color Slot -->
-        <div class="mb-6 p-5 rounded-2xl border-2 border-dashed border-brand/30 bg-brand/5">
-            <div class="flex items-center gap-4 flex-wrap">
-                <span class="text-xs font-mono font-semibold text-brand-dark bg-brand/10 px-2 py-1 rounded">PRIMARY</span>
-                <div class="w-24 h-24 rounded-xl" style="background: var(--color-primary);"></div>
-                <div class="flex-1">
-                    <p class="text-sm text-gray-700 font-medium">Основной цвет</p>
-                    <p class="text-xs text-gray-400 mt-0.5">Используйте классы: <code class="bg-gray-100 px-1 rounded">bg-brand</code>, <code class="bg-gray-100 px-1 rounded">text-brand</code>, <code class="bg-gray-100 px-1 rounded">bg-brand-dark</code></p>
-                    <p class="text-xs text-gray-400 mt-1">Измените в <code class="bg-gray-100 px-1 rounded">:root { --color-primary: ... }</code></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Secondary Color Slot -->
-        <div class="p-5 rounded-2xl border-2 border-dashed border-accent/30 bg-accent/5">
-            <div class="flex items-center gap-4 flex-wrap">
-                <span class="text-xs font-mono font-semibold text-accent-dark bg-accent/10 px-2 py-1 rounded">SECONDARY</span>
-                <div class="w-24 h-24 rounded-xl" style="background: var(--color-secondary);"></div>
-                <div class="flex-1">
-                    <p class="text-sm text-gray-700 font-medium">Дополнительный цвет</p>
-                    <p class="text-xs text-gray-400 mt-0.5">Используйте классы: <code class="bg-gray-100 px-1 rounded">bg-accent</code>, <code class="bg-gray-100 px-1 rounded">text-accent</code>, <code class="bg-gray-100 px-1 rounded">bg-accent-dark</code></p>
-                    <p class="text-xs text-gray-400 mt-1">Измените в <code class="bg-gray-100 px-1 rounded">:root { --color-secondary: ... }</code></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Preview: how colors look on elements -->
         <div class="mt-8 flex flex-wrap gap-3">
-            <button class="px-5 py-2.5 bg-brand text-white text-sm font-medium rounded-lg hover:bg-brand-dark transition-colors">Кнопка primary</button>
-            <button class="px-5 py-2.5 bg-brand-dark text-white text-sm font-medium rounded-lg hover:bg-brand-dark/90 transition-colors">Кнопка primary-dark</button>
-            <button class="px-5 py-2.5 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent-dark transition-colors">Кнопка secondary</button>
-            <button class="px-5 py-2.5 border-2 border-brand text-brand-dark text-sm font-medium rounded-lg hover:bg-brand/10 transition-colors">Кнопка outlined</button>
-            <span class="px-5 py-2.5 text-brand text-sm font-medium">Текст primary</span>
-            <span class="px-5 py-2.5 text-accent text-sm font-medium">Текст secondary</span>
+            <button class="px-5 py-2.5 bg-brand text-white text-sm font-medium rounded-lg hover:bg-brand-dark transition-colors">Кнопка</button>
+            <button class="px-5 py-2.5 bg-brand-dark text-white text-sm font-medium rounded-lg hover:opacity-90 transition-colors">Кнопка dark</button>
+            <button class="px-5 py-2.5 border-2 border-brand text-brand text-sm font-medium rounded-lg hover:bg-brand/10 transition-colors">Outlined</button>
+            <span class="px-5 py-2.5 text-brand text-sm font-medium">Текст</span>
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!--              ОСНОВНОЙ КОНТЕНТ               -->
-    <!-- ============================================ -->
-    <main class="flex-1">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h1 class="text-2xl font-bold text-gray-900">Контент</h1>
-            <p class="text-gray-500 mt-2 text-sm">Ваш контент здесь</p>
-        </div>
+    <main class="flex-1 flex items-center justify-center">
+        {% block content %}
+        {% endblock %}
     </main>
 
-    <!-- ============================================ -->
-    <!--                  ФУТЕР                      -->
-    <!-- ============================================ -->
     <footer class="bg-white border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <p class="text-sm text-gray-400 text-center">© 2026. Все права защищены.</p>
         </div>
     </footer>
 
-    <!-- ============================================ -->
-    <!--          МОДАЛКА: ВХОД / АВТОРИЗАЦИЯ         -->
-    <!-- ============================================ -->
     <div id="loginModal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('login')"></div>
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden relative">
+                <button onclick="closeModal('login')" class="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
                 <div class="px-6 pt-6 pb-4 text-center">
                     <h3 class="text-xl font-bold text-gray-900">Вход</h3>
                     <p class="text-sm text-gray-500 mt-1">Войдите в свой аккаунт</p>
@@ -208,13 +149,15 @@
         </div>
     </div>
 
-    <!-- ============================================ -->
-    <!--         МОДАЛКА: РЕГИСТРАЦИЯ                 -->
-    <!-- ============================================ -->
     <div id="registerModal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('register')"></div>
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in overflow-hidden relative">
+                <button onclick="closeModal('register')" class="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
                 <div class="px-6 pt-6 pb-4 text-center">
                     <h3 class="text-xl font-bold text-gray-900">Регистрация</h3>
                     <p class="text-sm text-gray-500 mt-1">Создайте аккаунт</p>
@@ -247,12 +190,14 @@
 
     <script>
         function openModal(type) {
-            document.getElementById(type + 'Modal').classList.remove('hidden');
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(type) {
-            document.getElementById(type + 'Modal').classList.add('hidden');
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.add('hidden');
             document.body.style.overflow = '';
         }
 
@@ -279,13 +224,6 @@
             e.preventDefault();
             closeModal('register');
         }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal('login');
-                closeModal('register');
-            }
-        });
     </script>
 </body>
 </html>
