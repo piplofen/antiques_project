@@ -16,7 +16,8 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'core',
-    'services'
+    'services',
+    'forum'
 ]
 
 if DEBUG:

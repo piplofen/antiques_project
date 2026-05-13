@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AntiqueVault</title>
+    <title>{{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -54,15 +54,33 @@
 
                 <!-- Desktop Nav Links -->
                 <div class="hidden md:flex items-center gap-1">
-                    <a href="#" class="px-4 py-2 text-sm font-medium text-brand-dark rounded-lg hover:bg-brand-light/10 transition-colors">
+                    {% if title == 'Маркетплейс' %}
+                    <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-brand-dark rounded-lg hover:bg-brand-light/10 transition-colors">
                         Маркетплейс
                     </a>
-                    <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                    {% else %}
+                   <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                    Маркетплейс
+                    </a>
+                    {% endif %}
+                    {% if title == 'Форум' %}
+                    <a href="{% url 'forum' %}" class="px-4 py-2 text-sm font-medium text-brand-dark rounded-lg hover:bg-brand-light/10 transition-colors">
                         Обсуждения
                     </a>
-                    <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                    {% else %}
+                    <a href="{% url 'forum' %}" class="px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                        Обсуждения
+                    </a>
+                    {% endif %}
+                    {% if title == 'Услуги' %}
+                    <a href="{% url 'services' %}" class="px-4 py-2 text-sm font-medium text-brand-dark rounded-lg hover:bg-brand-light/10 transition-colors">
                         Услуги
                     </a>
+                    {% else %}
+                    <a href="{% url 'services' %}" class="px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                        Услуги
+                    </a>
+                    {% endif %}
                 </div>
 
                 <!-- Right Side -->
