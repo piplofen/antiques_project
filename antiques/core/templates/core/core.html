@@ -46,13 +46,9 @@
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-
-                <!-- Logo -->
                 <a href="/" class="flex items-center gap-2 text-xl font-bold text-gray-900">
                     Logo
                 </a>
-
-                <!-- Desktop Nav Links -->
                 <div class="hidden md:flex items-center gap-1">
                     {% if title == 'Маркетплейс' %}
                     <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-brand-dark rounded-lg hover:bg-brand-light/10 transition-colors">
@@ -82,103 +78,92 @@
                     </a>
                     {% endif %}
                 </div>
-
-<!--                &lt;!&ndash; Right Side: Profile &ndash;&gt;-->
-<!--                <div class="flex items-center gap-3 relative">-->
-<!--                    &lt;!&ndash; Notification Bell &ndash;&gt;-->
-<!--                    <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">-->
-<!--                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>-->
-<!--                        </svg>-->
-<!--                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-brand rounded-full"></span>-->
-<!--                    </button>-->
-
-<!--                    &lt;!&ndash; Profile Avatar + Dropdown &ndash;&gt;-->
-<!--                    <div class="relative">-->
-<!--                        <button onclick="toggleProfileMenu()" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">-->
-<!--                            <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white text-sm font-semibold">-->
-<!--                                АИ-->
-<!--                            </div>-->
-<!--                            <span class="hidden sm:block text-sm font-medium text-gray-700">Алексей И.</span>-->
-<!--                            <svg class="w-4 h-4 text-gray-400 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>-->
-<!--                            </svg>-->
-<!--                        </button>-->
-
-<!--                        &lt;!&ndash; Dropdown Menu &ndash;&gt;-->
-<!--                        <div id="profileMenu" class="hidden absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 animate-fade-in z-50">-->
-<!--                            <div class="px-4 py-3 border-b border-gray-100">-->
-<!--                                <p class="text-sm font-semibold text-gray-900">Алексей Иванов</p>-->
-<!--                                <p class="text-xs text-gray-500 mt-0.5">alexey@email.com</p>-->
-<!--                            </div>-->
-<!--                            <div class="py-2">-->
-<!--                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">-->
-<!--                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>-->
-<!--                                    </svg>-->
-<!--                                    Мой профиль-->
-<!--                                </a>-->
-<!--                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">-->
-<!--                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>-->
-<!--                                    </svg>-->
-<!--                                    Настройки-->
-<!--                                </a>-->
-<!--                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">-->
-<!--                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>-->
-<!--                                    </svg>-->
-<!--                                    Безопасность-->
-<!--                                </a>-->
-<!--                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">-->
-<!--                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>-->
-<!--                                    </svg>-->
-<!--                                    Помощь-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                            <div class="border-t border-gray-100 py-2">-->
-<!--                                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">-->
-<!--                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>-->
-<!--                                    </svg>-->
-<!--                                    Выйти-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    &lt;!&ndash; Mobile Menu Toggle &ndash;&gt;-->
-<!--                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-500 hover:text-gray-700 rounded-lg">-->
-<!--                        <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>-->
-<!--                        </svg>-->
-<!--                        <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
-<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>-->
-<!--                        </svg>-->
-<!--                    </button>-->
-<!--                </div>-->
-
-                <!-- Right Side -->
-                <div class="flex items-center gap-3">
-                    <button onclick="openModal('login')" class="hidden sm:inline-flex px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-                        Войти
-                    </button>
-                    <button onclick="openModal('register')" class="hidden sm:inline-flex px-4 py-2 text-sm font-medium text-white bg-brand hover:bg-brand-dark rounded-lg transition-colors">
-                        Регистрация
-                    </button>
-
-                    <!-- Mobile Menu Toggle -->
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-500 hover:text-gray-700 rounded-lg">
-                        <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                        <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="flex items-center gap-3 relative">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                        </button>
+                        <div class="relative">
+                            <button onclick="toggleProfileMenu()" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white text-sm font-semibold">
+                                    {{ request.user.last_name|slice:":1" }}{{ request.user.first_name|slice:":1" }}
+                                </div>
+                                <span class="hidden sm:block text-sm font-medium text-gray-700">{{ request.user.last_name }} {{ request.user.first_name }}</span>
+                                <svg class="w-4 h-4 text-gray-400 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div id="profileMenu" class="hidden absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 animate-fade-in z-50">
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <p class="text-sm font-semibold text-gray-900">{{ request.user.last_name }} {{ request.user.first_name }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">{{ request.user.email }}</p>
+                                </div>
+                                <div class="py-2">
+                                    <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        Мой профиль
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        Настройки
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                        </svg>
+                                        Безопасность
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Помощь
+                                    </a>
+                                </div>
+                                <div class="border-t border-gray-100 py-2">
+                                    <a href="{% url 'logout' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                        </svg>
+                                        Выйти
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-500 hover:text-gray-700 rounded-lg">
+                            <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="flex items-center gap-3">
+                        <button onclick="openModal('login')" class="hidden sm:inline-flex px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                            Войти
+                        </button>
+                        <button onclick="openModal('register')" class="hidden sm:inline-flex px-4 py-2 text-sm font-medium text-white bg-brand hover:bg-brand-dark rounded-lg transition-colors">
+                            Регистрация
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-500 hover:text-gray-700 rounded-lg">
+                            <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-100 bg-white animate-slide-down">
@@ -186,10 +171,25 @@
                 <a href="#" class="block px-3 py-2.5 text-sm font-medium text-brand-dark rounded-lg bg-brand-light/10">Маркетплейс</a>
                 <a href="#" class="block px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50">Обсуждения</a>
                 <a href="#" class="block px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50">Услуги</a>
-                <div class="pt-3 flex flex-col gap-2">
-                    <button onclick="openModal('login'); toggleMobileMenu()" class="w-full px-4 py-2.5 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50">Войти</button>
-                    <button onclick="openModal('register'); toggleMobileMenu()" class="w-full px-4 py-2.5 text-sm font-medium text-white bg-brand hover:bg-brand-dark rounded-lg">Регистрация</button>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="border-t border-gray-100 mt-3 pt-3">
+                        <div class="flex items-center gap-3 px-3 py-2 mb-2">
+                            <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-white text-sm font-semibold">АИ</div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Алексей Иванов</p>
+                                <p class="text-xs text-gray-500">alexey@email.com</p>
+                            </div>
+                        </div>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50">Мой профиль</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50">Настройки</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50">Выйти</a>
+                    </div>
+                {% else %}
+                    <div class="pt-3 flex flex-col gap-2">
+                        <button onclick="openModal('login'); toggleMobileMenu()" class="w-full px-4 py-2.5 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50">Войти</button>
+                        <button onclick="openModal('register'); toggleMobileMenu()" class="w-full px-4 py-2.5 text-sm font-medium text-white bg-brand hover:bg-brand-dark rounded-lg">Регистрация</button>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -215,6 +215,7 @@
         </div>
     </footer>
 
+    <!-- LOGIN MODAL -->
     <div id="loginModal" class="fixed inset-0 z-50 hidden">
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div class="relative flex items-center justify-center min-h-screen p-4">
@@ -228,14 +229,14 @@
                     <h3 class="text-xl font-bold text-gray-900">Вход</h3>
                     <p class="text-sm text-gray-500 mt-1">Войдите в свой аккаунт</p>
                 </div>
-                <form class="px-6 pb-6 space-y-4" onsubmit="handleLogin(event)">
+                <form class="px-6 pb-6 space-y-4" data-endpoint="{% url 'login' %}" id="loginForm">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" required placeholder="your@email.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                        <input type="email" required name="email" placeholder="your@email.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
-                        <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                        <input type="password" name="password" required placeholder="••••••••" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
                     </div>
                     <button type="submit" class="w-full py-3 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl transition-colors text-sm">Войти</button>
                     <p class="text-center text-sm text-gray-500">Нет аккаунта? <button type="button" onclick="switchModal('login', 'register')" class="text-brand font-medium hover:underline">Зарегистрироваться</button></p>
@@ -244,6 +245,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div id="registerModal" class="fixed inset-0 z-50 hidden">
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div class="relative flex items-center justify-center min-h-screen p-4">
@@ -257,69 +259,337 @@
                     <h3 class="text-xl font-bold text-gray-900">Регистрация</h3>
                     <p class="text-sm text-gray-500 mt-1">Создайте аккаунт</p>
                 </div>
-                <form class="px-6 pb-6 space-y-4" onsubmit="handleRegister(event)">
+                <form id="registerForm" class="px-6 pb-6 space-y-4" data-endpoint="{% url 'reg' %}">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Имя</label>
-                            <input type="text" required placeholder="Имя" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                            <input type="text" name="first_name" required placeholder="Имя"
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Фамилия</label>
-                            <input type="text" required placeholder="Фамилия" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                            <input type="text" name="last_name" required placeholder="Фамилия"
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" required placeholder="your@email.com" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                        <input type="email" name="email" required placeholder="your@email.com"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
-                        <input type="password" required placeholder="Минимум 8 символов" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                        <input type="password" name="password" id="registerPassword" required minlength="8" placeholder="Минимум 8 символов"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                        <p class="text-xs text-gray-400 mt-1">Минимум 8 символов, буквы и цифры</p>
                     </div>
-                    <button type="submit" class="w-full py-3 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl transition-colors text-sm">Создать аккаунт</button>
-                    <p class="text-center text-sm text-gray-500">Уже есть аккаунт? <button type="button" onclick="switchModal('register', 'login')" class="text-brand font-medium hover:underline">Войти</button></p>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Подтвердите пароль</label>
+                        <input type="password" name="password_confirm" required placeholder="Повторите пароль"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all">
+                    </div>
+
+                    <div id="registerErrors" class="hidden"></div>
+
+                    <button type="submit" id="registerSubmit" class="w-full py-3 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl transition-colors text-sm">
+                        Создать аккаунт
+                    </button>
+                    <p class="text-center text-sm text-gray-500">Уже есть аккаунт?
+                        <button type="button" onclick="switchModal('register', 'login')" class="text-brand font-medium hover:underline">Войти</button>
+                    </p>
                 </form>
             </div>
         </div>
     </div>
 
-    <script>
-        function openModal(type) {
-            const modal = document.getElementById(type + 'Modal');
+</body>
+<script>
+    // ========== CSRF TOKEN ==========
+    function getCSRFToken() {
+        return document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+    }
+
+    // ========== LOGIN FUNCTIONS ==========
+    async function loginUser(email, password, endpoint) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ email, password }),
+                credentials: 'same-origin'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || data.error || data.non_field_errors?.join(', ') || 'Ошибка авторизации');
+            }
+
+            return { success: true, data };
+        } catch (error) {
+            console.error('Login error:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    function showError(form, message) {
+        let errorDiv = form.querySelector('.form-error');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'form-error px-4 py-3 bg-red-50 text-red-700 text-sm rounded-xl mb-4';
+            form.insertBefore(errorDiv, form.firstChild);
+        }
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+    }
+
+    function clearErrors(form) {
+        const errorDiv = form.querySelector('.form-error');
+        if (errorDiv) errorDiv.remove();
+        form.querySelectorAll('input').forEach(input => {
+            input.classList.remove('border-red-500', 'focus:ring-red-200', 'focus:border-red-500');
+        });
+    }
+
+    // ========== REGISTER FUNCTIONS ==========
+    async function registerUser(userData, endpoint) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(userData),
+                credentials: 'same-origin'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errors = {};
+                if (data.email) errors.email = Array.isArray(data.email) ? data.email.join(', ') : data.email;
+                if (data.password) errors.password = Array.isArray(data.password) ? data.password.join(', ') : data.password;
+                if (data.password_confirm) errors.password_confirm = Array.isArray(data.password_confirm) ? data.password_confirm.join(', ') : data.password_confirm;
+                if (data.non_field_errors) errors.general = data.non_field_errors.join(', ');
+                if (data.detail) errors.general = data.detail;
+                throw { errors, message: errors.general || 'Ошибка регистрации' };
+            }
+
+            return { success: true, data };
+        } catch (error) {
+            console.error('Register error:', error);
+            return { success: false, error: error.message || 'Неизвестная ошибка', errors: error.errors };
+        }
+    }
+
+    function validateRegisterData(data) {
+        if (data.password.length < 8) {
+            return { field: 'password', message: 'Пароль должен содержать минимум 8 символов' };
+        }
+        if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(data.password)) {
+            return { field: 'password', message: 'Пароль должен содержать буквы и цифры' };
+        }
+        if (data.password !== data.password_confirm) {
+            return { field: 'password_confirm', message: 'Пароли не совпадают' };
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            return { field: 'email', message: 'Введите корректный email' };
+        }
+        return null;
+    }
+
+    function showRegisterError(form, field, message) {
+        if (!field) {
+            const errorDiv = document.getElementById('registerErrors');
+            errorDiv.className = 'px-4 py-3 bg-red-50 text-red-700 text-sm rounded-xl mb-4 animate-fade-in';
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+        const input = form.querySelector(`[name="${field}"]`);
+        if (input) {
+            input.classList.add('border-red-500', 'focus:ring-red-200', 'focus:border-red-500');
+            const hint = document.createElement('p');
+            hint.className = 'mt-1 text-xs text-red-600 animate-fade-in';
+            hint.textContent = message;
+            hint.dataset.errorHint = 'true';
+            input.parentNode.appendChild(hint);
+        }
+    }
+
+    function clearRegisterErrors(form) {
+        const errorDiv = document.getElementById('registerErrors');
+        if (errorDiv) {
+            errorDiv.classList.add('hidden');
+            errorDiv.textContent = '';
+        }
+        form.querySelectorAll('[data-error-hint]').forEach(el => el.remove());
+        form.querySelectorAll('input').forEach(input => {
+            input.classList.remove('border-red-500', 'focus:ring-red-200', 'focus:border-red-500');
+        });
+    }
+
+    function showSuccessToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-4 right-4 z-50 px-6 py-4 bg-green-600 text-white rounded-xl shadow-lg animate-fade-in';
+        toast.innerHTML = `<span class="text-sm font-medium">✓ ${message}</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // ========== MODAL FUNCTIONS ==========
+    function openModal(type) {
+        const modal = document.getElementById(type + 'Modal');
+        if (modal) {
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
+    }
 
-        function closeModal(type) {
-            const modal = document.getElementById(type + 'Modal');
+    function closeModal(type) {
+        const modal = document.getElementById(type + 'Modal');
+        if (modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = '';
         }
+    }
 
-        function switchModal(from, to) {
-            closeModal(from);
-            setTimeout(() => openModal(to), 100);
+    function switchModal(from, to) {
+        closeModal(from);
+        setTimeout(() => openModal(to), 150);
+    }
+
+    // ========== UI FUNCTIONS ==========
+    function toggleProfileMenu() {
+        document.getElementById('profileMenu').classList.toggle('hidden');
+    }
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        if (menu) menu.classList.toggle('hidden');
+        if (menuIcon) menuIcon.classList.toggle('hidden');
+        if (closeIcon) closeIcon.classList.toggle('hidden');
+        const profileMenu = document.getElementById('profileMenu');
+        if (profileMenu) profileMenu.classList.add('hidden');
+    }
+
+    // ========== EVENT LISTENERS ==========
+    document.addEventListener('DOMContentLoaded', () => {
+        // Close dropdowns on outside click
+        document.addEventListener('click', function(e) {
+            const profileMenu = document.getElementById('profileMenu');
+            const profileBtn = e.target.closest('button[onclick="toggleProfileMenu()"]');
+            if (profileMenu && !profileMenu.contains(e.target) && !profileBtn) {
+                profileMenu.classList.add('hidden');
+            }
+        });
+
+        // ===== LOGIN FORM =====
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = loginForm?.querySelector('button[type="submit"]');
+
+        if (loginForm && loginBtn) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearErrors(loginForm);
+
+                const formData = new FormData(loginForm);
+                const email = formData.get('email');
+                const password = formData.get('password');
+                const endpoint = loginForm.dataset.endpoint || '/login/';
+
+                const originalBtnText = loginBtn.innerHTML;
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<span class="animate-pulse">Входим...</span>';
+
+                const result = await loginUser(email, password, endpoint);
+
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalBtnText;
+
+                if (result.success) {
+                    closeModal('login');
+                    if (window.onUserLoggedIn) {
+                        window.onUserLoggedIn(result.data);
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    showError(loginForm, result.error);
+                }
+            });
         }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const menuIcon = document.getElementById('menuIcon');
-            const closeIcon = document.getElementById('closeIcon');
-            menu.classList.toggle('hidden');
-            menuIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        }
+        // ===== REGISTER FORM =====
+        const registerForm = document.getElementById('registerForm');
+        const registerBtn = document.getElementById('registerSubmit');
 
-        function handleLogin(e) {
-            e.preventDefault();
-            closeModal('login');
-        }
+        if (registerForm && registerBtn) {
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearRegisterErrors(registerForm);
 
-        function handleRegister(e) {
-            e.preventDefault();
-            closeModal('register');
+                const formData = new FormData(registerForm);
+                const userData = {
+                    first_name: formData.get('first_name'),
+                    last_name: formData.get('last_name'),
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    password_confirm: formData.get('password_confirm')
+                };
+
+                const validationError = validateRegisterData(userData);
+                if (validationError) {
+                    showRegisterError(registerForm, validationError.field, validationError.message);
+                    return;
+                }
+
+                const endpoint = registerForm.dataset.endpoint || '/reg/';
+                const originalBtnText = registerBtn.innerHTML;
+                registerBtn.disabled = true;
+                registerBtn.innerHTML = '<span class="animate-pulse">Создаём...</span>';
+
+                const result = await registerUser(userData, endpoint);
+
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = originalBtnText;
+
+                if (result.success) {
+                    closeModal('register');
+                    showSuccessToast('Аккаунт создан! Теперь вы можете войти.');
+                    switchModal('register', 'login');
+                    const loginEmail = document.querySelector('#loginForm input[name="email"]');
+                    if (loginEmail) loginEmail.value = userData.email;
+                } else {
+                    if (result.errors) {
+                        for (const [field, message] of Object.entries(result.errors)) {
+                            if (field === 'general') {
+                                showRegisterError(registerForm, null, message);
+                            } else {
+                                showRegisterError(registerForm, field, message);
+                            }
+                        }
+                    } else {
+                        showRegisterError(registerForm, null, result.error);
+                    }
+                }
+            });
         }
-    </script>
-</body>
+    });
+</script>
 </html>
-
