@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'theme',
     'core',
     'services',
-    'forum'
+    'forum',
+    'profile_manager'
 ]
 
 if DEBUG:

@@ -18,10 +18,8 @@ def login_view(request):
 
     if user:
         login(request, user)
-        print("Успешный вход")
         return JsonResponse({"success": True}, status=200)
     else:
-        print("Не зашел")
         return JsonResponse({"error": "Неверный логин или пароль"}, status=401)
 
 @ensure_csrf_cookie
