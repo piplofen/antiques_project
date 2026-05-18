@@ -42,9 +42,7 @@ class Profile(models.Model):
         ("Ж", "Женский")
     )
 
-    # ✅ related_name изменён на латиницу
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
-    # ✅ Теперь используется callable
     avatar = models.ImageField(upload_to=user_avatar_path, null=True, blank=True, verbose_name="Аватар")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлен")

@@ -21,13 +21,13 @@
         <div class="relative -mt-12 px-2 sm:px-4 mb-8">
             <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4">
                 <div class="w-24 h-24 rounded-2xl bg-brand-dark flex items-center justify-center text-white text-3xl font-bold border-4 border-white shadow-lg flex-shrink-0">
-                    {{ request.user.first_name|slice:":1" }}{{ request.user.last_name|slice:":1" }}
+                    {{ request.user.last_name|slice:":1" }}{{ request.user.first_name|slice:":1" }}
                 </div>
                 <div class="pb-0 flex-1">
-                    <h2 class="text-xl font-bold text-gray-900">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+                    <h2 class="text-xl font-bold text-gray-900">{{ request.user.last_name }} {{ request.user.first_name }}</h2>
                     <p class="text-sm text-gray-500">Участник с {{ request.user.profile.created_at }}</p>
                 </div>
-                <a href="edit-profile.html" class="flex items-center gap-2 px-4 py-2.5 bg-brand hover:bg-brand-dark text-white text-sm font-medium rounded-xl transition-colors flex-shrink-0">
+                <a href="{% url 'edit' %}" class="flex items-center gap-2 px-4 py-2.5 bg-brand hover:bg-brand-dark text-white text-sm font-medium rounded-xl transition-colors flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     Редактировать
                 </a>
